@@ -4,6 +4,41 @@
 <meta name="viewport" content="width=device-width, user-scalable=yes, initial-scale=1, maximum-scale=1">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <title>2019.11.16 BIG day</title>
+<script src="https://code.jquery.com/jquery-2.2.2.min.js" integrity="sha256-36cp2Co+/62rEAAYHLmRCPIych47CvdM+uTBJwSzWjI=" crossorigin="anonymous"></script>
+<script>
+        $(function(){
+    
+            // 初期設定
+            $('.wrapper').hide();
+            $('.date').css({
+                opacity: 0,
+                marginBottom: '-10px'
+            });
+            $('.wrapper').fadeIn(1000);
+
+            // 名前アニメーション
+            function nameBoxAnimation() {
+                $('.name_box').addClass('is-tween')
+            }
+            setTimeout(nameBoxAnimation, 500);
+
+            // 似顔絵アニメーション
+            function portraitAnimation() {
+                $('.portrait').addClass('is-tween')
+            }
+            setTimeout(portraitAnimation, 3000);
+
+            // 日付アニメーション
+            function dateAnimation() {
+                $('.date').animate({
+                    opacity: 1,
+                    marginBottom: '0px'
+                }, 500);
+            }
+            setTimeout(dateAnimation, 3500);
+
+        });
+</script>       
 <style type="text/css">
     /* リセットCSS */
     html, body, div, span, applet, object, iframe,
@@ -117,11 +152,11 @@ table {
 @media screen and (max-height: 667px) {
     .portrait_box{
         margin: 10px 0 0 0;
-        position: absolute;
-        z-index: 1;
     }
     .portrait{
         width: 45%;
+        position: absolute;
+        z-index: 1;
     }
     .name_box{
         padding: 20px 0 15px;
@@ -157,14 +192,26 @@ table {
     line-height: 1.5em;
 }
 
-.date_box{
-    margin: 10px 0 0 0;
-}
-
 .date{
     width: 80%;
 }
-    
+
+/* cssアニメーション */
+.pulseOut {
+    /* -webkit-transition: all .5s cubic-bezier(.68,-.55,.265,1.55);
+    transition: all .5s cubic-bezier(.68,-.55,.265,1.55); */
+    -webkit-transition: all .5s;
+    transition: all .5s;
+    -webkit-transform: scale(0);
+    transform: scale(0);
+    opacity: 0
+}
+.pulseOut.is-tween {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+    opacity: 1
+}
+
 </style>
 
 </head>
@@ -172,7 +219,7 @@ table {
 
 <div class="wrapper">
     <div class="blue_box">
-        <div class="name_box">
+        <div class="name_box pulseOut">
             <img src="portrait-assets/name_Ayako.png" class="name">
         </div>
         <div class="anm_text_box">
@@ -212,7 +259,7 @@ table {
             </svg>
         </div>
         <div class="portrait_box">
-            <img src="portrait-assets/ayako.png" class="portrait">
+            <img src="portrait-assets/ayako.png" class="portrait pulseOut">
         </div>
     </div>
     <div class="pooh_box">
@@ -228,7 +275,25 @@ table {
 
 <script type="text/javascript" src="./vivus.min.js"></script>
 <script>
-    new Vivus('svg-animation', {type: 'scenario-sync',duration: 8, forceRender: false ,animTimingFunction:Vivus.EASE})
+    // new Vivus('svg-animation', {
+    //     type: 'scenario-sync',
+    //     duration: 8,
+    //     forceRender: false ,
+    //     animTimingFunction:Vivus.EASE
+    // })
+
+    function drawStart() {
+        myVivus.play();
+    }
+
+    const myVivus = new Vivus('svg-animation', {
+        type: 'scenario-sync',
+        start: 'manual',
+        duration: 8,
+        animTimingFunction:Vivus.EASE
+    });
+    setTimeout(drawStart, 1000);
+
 </script>
 
 </body>
